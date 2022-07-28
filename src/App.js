@@ -7,13 +7,14 @@ import "./styles/styles.css"
 
 export default function App() {
   const [contacts, setContacts] = useState([])
+  const [updateContacts, setUpdateContacts] = useState(false)
 
   useEffect(() => {
   
     fetch(`http://localhost:4000/contacts`)
       .then((res) => res.json())
       .then((data) => setContacts(data)); 
-  }, []);
+  }, [updateContacts]);
 
   return (
     <>
@@ -33,7 +34,7 @@ export default function App() {
           <Route path="/" element={<ContactsList contacts={contacts}/>}/>
           <Route path="/contacts" element={<ContactsList contacts={contacts}/>}/>
           <Route path="/contacts/:id" element={<ContactsView />} />
-          <Route path="/contacts/add" element={<ContactsAdd contacts={contacts} setContacts={setContacts} />} />
+          <Route path="/contacts/add" element={<ContactsAdd setUpdateContacts={setUpdateContacts} />} />
         </Routes>
       </main>
     </>

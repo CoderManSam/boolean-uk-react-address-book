@@ -2,27 +2,12 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 
 function ContactsAdd(props) {
-  const { setContacts, contacts} = props
+  const { setUpdateContacts} = props
 
-  const [newContact, setNewContact] = useState({})
+  const navigate = useNavigate()
 
   //TODO: Implement controlled form
   //send POST to json server on form submit
-
-  useEffect(() => {
-
-    if(newContact.hasOwnProperty('firstName')) {
-      fetch(`http://localhost:4000/contacts`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        }, 
-        body: JSON.stringify(newContact)
-      })
-        .then((res) => res.json())
-        .then((data) => setContacts(data)); 
-    }
-  }, [newContact]);
 
   const submitFormData = (event) => {
 
@@ -30,12 +15,22 @@ function ContactsAdd(props) {
       firstName: event.target.firstName.value,
       lastName: event.target.lastName.value,
       street: event.target.street.value,
-      city: event.target.city.value
+      city: event.target.city.value,
+      email: event.target.email.value,
+      linkedIn: event.target.linkedIn.value,
+      twitter: event.target.twitter.value
     }
 
-    console.log("contact", contact)
-
-    setNewContact(contact)
+    fetch(`http://localhost:4000/contacts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      }, 
+      body: JSON.stringify(contact)
+    })
+    .then((res) => res.json())
+    .then(()=> setUpdateContacts(true))
+    .then(navigate("/"));
   }
 
   return (
@@ -53,6 +48,15 @@ function ContactsAdd(props) {
 
       <label htmlFor="city">City:</label>
       <input id="city" name="city" type="text" required/>
+
+      <label htmlFor="email">Email:</label>
+      <input id="email" name="email" type="email" required/>
+
+      <label htmlFor="linkedIn">LinkedIn:</label>
+      <input id="linkedIn" name="linkedIn" type="text" required/>
+
+      <label htmlFor="twitter">Twitter:</label>
+      <input id="twitter" name="twitter" type="text" required/>
 
       <div className="actions-section">
         <button className="button blue" type="submit">
