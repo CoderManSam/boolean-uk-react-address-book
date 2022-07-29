@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom";
 
 function ContactsAdd(props) {
-  const { setUpdateContacts} = props
+  const { updateContacts, setUpdateContacts} = props
 
   const navigate = useNavigate()
 
@@ -29,7 +29,7 @@ function ContactsAdd(props) {
       body: JSON.stringify(contact)
     })
     .then((res) => res.json())
-    .then(()=> setUpdateContacts(true))
+    .then(()=> updateContacts ? setUpdateContacts(false) : setUpdateContacts(true))
     .then(navigate("/"));
   }
 

@@ -20,7 +20,10 @@ function ContactsList(props) {
                 {firstName} {lastName}
               </p>
               <p> 
-              <Link to={`/contacts/${contact.id}`}>View</Link>
+                <Link to={`/contacts/${contact.id}`}>View</Link>
+              </p>
+              <p>
+                <Link to={`/contacts/${contact.id}/edit`}>Edit</Link>
               </p>
             </li>
           )
